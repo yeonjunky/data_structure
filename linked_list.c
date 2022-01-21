@@ -37,7 +37,7 @@ void insert(node *head, size_t index, int value){
     */
 
    if(index == 0){
-       printf("cannot contain data in head");
+       fprintf(stderr, "cannot insert the head\n");
    }
 
     else{
@@ -45,14 +45,13 @@ void insert(node *head, size_t index, int value){
         node *next_node = NULL;
         node *new_node = (node *)malloc(sizeof(node));
         new_node -> value = value;
-        size_t i;
 
-        for(i=0;i<index-1;i++){
+        for(size_t i=0;i<index-1;i++){
             if(temp != NULL){
             temp = temp -> next;
             }
             else {
-                fprintf(stderr, "index %ld is out of bounds\n", index);
+                fprintf(stderr, "error occured in func insert\nindex %ld is out of bounds\n", index);
                 break;
             }
         }
@@ -61,7 +60,34 @@ void insert(node *head, size_t index, int value){
         temp -> next = new_node;
         new_node -> next = next_node;
 
-        printf("test %d, index %ld\n", temp->value, i);
+    }
+}
+
+void delete(node *head, size_t index){
+    if(index == 0){
+        fprintf(stderr, "cannot delete head\n");
+    }
+
+    else{
+        node *temp = head;
+        node *next_node = NULL;
+        node *delete_node = NULL;
+
+        for(size_t i=0;i<index-1;i++){
+            if(temp != NULL){
+                temp = temp -> next;
+            }
+            else {
+                fprintf(stderr, "error occured in func delte\nindex %ld is out of bounds\n", index);
+                break;
+            }
+        }
+
+        delete_node = temp -> next;
+        next_node = delete_node -> next;
+        temp -> next = next_node;
+
+        free(delete_node);
     }
 }
 
@@ -101,8 +127,9 @@ int main(){
     append(head, 4);
     append(head, 5);
 
-    insert(head, 15, 3);
+    insert(head, 5, 3);
 
+    delete(head, 5);
 
     print_list(head);
 
