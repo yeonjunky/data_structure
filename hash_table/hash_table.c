@@ -18,23 +18,23 @@ static void ht_delete_item(ht_item* i) {
 }
 
 
-ht_hash_table* ht_new_table() {
+ht_hash_table* ht_new() {
     ht_hash_table* ht = malloc(sizeof(ht_hash_table));
 
     ht -> size = 53;
     ht -> count = 0;
-    ht -> items = calloc((size_t) ht -> size, sizeof(ht_item));
+    ht -> items = calloc((size_t) ht->size, sizeof(ht_item*));
 }
 
-void ht_delete_table(ht_table* t) {
-    for(int i=0;i<t -> size;i++) {
-        ht_item* i = t -> items[i];
-        if (i -> key != NULL) {
-            ht_delete_item(i);
+void ht_delete_table(ht_hash_table* t) {
+    for(int i=0;i<t->size;i++) {
+        ht_item* item = t->items[i];
+        if (item != NULL) {
+            ht_delete_item(item);
         }
 
-    free(t -> items)
-    free(t)
+    free(t->items);
+    free(t);
     }
 }
 
